@@ -10,7 +10,7 @@ const closeModal = () => {
 
 const tempClient = {
   nome : "Carla",
-  email : "massayuki_shimada@hotmail.com",
+  email : "shimada@hotmail.com",
   celular : "43984365454",
   cidade : "Londrina"
 }
