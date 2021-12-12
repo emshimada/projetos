@@ -42,6 +42,17 @@ const createClient = (client) => {
 const getLocalStorage = () => JSON.parse(localStorage.getItem('db_client')) ?? []; 
 const setLocalStorage = (dbClient) => localStorage.setItem("db_client", JSON.stringify(dbClient));
 
+const isValidFields = () => {
+  return document.getElementById('form').reportValidity();
+}
+
+// Interação com o layout
+const saveClient = () => {
+  if (isValidFields()){
+    console.log('Cadastrando cliente. ')
+  }
+}
+
 // Eventos
 document.getElementById('cadastrarCliente')
     .addEventListener('click', openModal);
