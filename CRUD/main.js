@@ -6,6 +6,7 @@ const openModal = () => document.getElementById('modal')
 const closeModal = () => {
     clearFields();
     document.getElementById('modal').classList.remove('active');
+
 }
 
 const tempClient = {
@@ -39,6 +40,11 @@ const createClient = (client) => {
   
 }
 
+const clearFields = () => {
+  const fields = document.querySelectorAll('.modal-field');
+  fields.forEach(field => field.value = '');
+}
+
 const getLocalStorage = () => JSON.parse(localStorage.getItem('db_client')) ?? []; 
 const setLocalStorage = (dbClient) => localStorage.setItem("db_client", JSON.stringify(dbClient));
 
@@ -49,9 +55,44 @@ const isValidFields = () => {
 // Interação com o layout
 const saveClient = () => {
   if (isValidFields()){
-    console.log('Cadastrando cliente. ')
+    const client = {
+      nome: document.getElementById('nome').value,
+      email: document.getElementById('email').value,
+      celular: document.getElementById('celular').value,
+      cidade: document.getElementById('cidade').value
+    }
+    
+  createClient(client);
+  closeModal();
   }
 }
+
+const createRow = (client) => {
+  const newRow = document.createElement('tr');
+  newRow.innerHTML = `
+    <td>${client.nome}</td>
+    <td>${client.email}</td>
+    <td>${client.celular}</td>
+    <td>${client.cidade}</td>
+    
+    <td>
+      <button type = "button" class = "button green"> editar </button>
+      <button type = "button" class = "button red"> excluir </button>
+
+    </td>
+    
+  ` 
+  document.querySelector('#tableClient>tbody').appendChild(newRow);
+}
+
+const updateTable = () => {
+  const dbClient = readClient();
+  dbClient.forEach(createRow);
+}
+
+updateTable();
+
+
 
 // Eventos
 document.getElementById('cadastrarCliente')
@@ -62,3 +103,5 @@ document.getElementById('modalClose')
     
 document.getElementById('salvar')
     .addEventListener('click', saveClient);
+document.getElementById('cancelar')
+    .addEventListener('click', closeModal);
