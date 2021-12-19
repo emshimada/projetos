@@ -63,6 +63,7 @@ const saveClient = () => {
     }
     
   createClient(client);
+  updateTable();
   closeModal();
   }
 }
@@ -85,8 +86,14 @@ const createRow = (client) => {
   document.querySelector('#tableClient>tbody').appendChild(newRow);
 }
 
+const clearTable = () => {
+  const rows = document.querySelectorAll('#tableClient>tbody tr');
+  rows.forEach(row=> row.parentNode.removeChild(row));
+}
+
 const updateTable = () => {
   const dbClient = readClient();
+  clearTable();
   dbClient.forEach(createRow);
 }
 
@@ -105,3 +112,5 @@ document.getElementById('salvar')
     .addEventListener('click', saveClient);
 document.getElementById('cancelar')
     .addEventListener('click', closeModal);
+document.querySelector('#tableClient>tbody')
+    .addEventListener('click', editDelete)
